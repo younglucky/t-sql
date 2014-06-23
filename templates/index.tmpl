@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>咨询订阅</title>
+	[[template "metas"]]
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.13.0/css/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="http://gmu.baidu.com/assets/widget/calendar/calendar.css" />
+	<link rel="stylesheet" type="text/css" href="http://gmu.baidu.com/assets/widget/calendar/calendar.default.css" />
+	<style type="text/css">
+
+	body,.ui.menu {
+		margin: 0;
+	}
+	</style>
+</head>
+<body ng-controller="SubscribeCtrl">
+	<nav class="ui menu">
+		<span class=" text item" ng-show="isUser">
+			<div class="ui button green" ng-click="describePage()">个人信息</div>
+		</span>
+		[[if .user]]
+		<span class="right floated text item">
+			<div class="ui button green" ng-show="!isUser" ng-click="describePage()">订阅</div>
+		</span>
+		[[end]]
+	</nav>
+	<form class="ui form segment" name="subscribeForm" novalidate ng-submit="subscribe()" ng-show="!isUser">
+		<div class="ui active inverted dimmer" ng-show="subscribeForm.submitted">
+			<div class="ui text loader">正在提交...</div>
+		</div>
+		<div class="field" ng-class="{error:subscribeForm.first_name.$invalid && subscribeForm.first_name.$dirty}">
+			<div class="ui left labeled icon input">
+				<input placeholder="请问您贵姓啊" type="text" name="first_name" ng-model="user.first_name" my-focus required value="[[.FirstName]]" /> <i class="user icon"></i>
+				<div class="ui corner label"> <i class="icon asterisk"></i>
+				</div>
+			</div>
+			<div ng-show="subscribeForm.first_name.$invalid && subscribeForm.first_name.$dirty && !subscribeForm.first_name.$focused" class="ui red pointing prompt label transition">请输入您的姓</div>
+		</div>
+		<div class="field" ng-class="{error:subscribeForm.mobile.$invalid && subscribeForm.mobile.$dirty}">
+			<div class="ui left labeled icon input">
+				<input placeholder="请输入您的手机号码" name="mobile" ng-model="user.mobile" type="text" ng-pattern="/^1[34578]\d{9}$/" my-focus required value="[[.Mobile]]" />
+				<i class="mobile icon"></i>
+				<div class="ui corner label">
+					<i class="icon asterisk"></i>
+				</div>
+			</div>
+		</div>
+		<div class="field"  ng-class="{error:subscribeForm.birthday.$invalid && subscribeForm.birthday.$dirty}">
+			<div class="ui left labeled icon input">
+				<input placeholder="请输入您的出生日期" id="datepicker" type="text" ng-model="user.birthday" name="birthday" my-focus required value="[[.Birthday]]" />
+				<i class="empty calendar icon"></i>
+				<div class="ui corner label">
+					<i class="icon asterisk"></i>
+				</div>
+			</div>
+		</div>
+		<div class="inline field">
+			<label for="remale">女</label>
+			<input id="remale" type="radio" name="gender" ng-model="user.gender"  value="remale" checked="checked" />
+			<label for="male">男</label>
+			<input id="male" type="radio" name="gender" ng-model="user.gender" value="male" />
+		</div>
+		<div class="field">
+			<input class="fluid ui button" type="submit" value="[[if .user]]修改资料[[else]]提交资料[[end]]"  ng-class="{disabled: subscribeForm.$invalid}" ng-disabled="subscribeForm.$invalid" />
+		</div>
+	</form>
+	<form class="ui form segment" name="subscribeForm2" ng-show="isUser">
+		<div ng-option="m.id as m.title group by  m.title for m in in allitems">
+			<div>{{m.title}}</div>
+		</div>
+	</form>
+	<script type="text/javascript" src="http://cdn.staticfile.org/angular.js/1.3.0-beta.7/angular.min.js"></script>
+	<script type="text/javascript" src="http://gmu.baidu.com/dist/zepto.js"></script>
+	<script type="text/javascript" src="http://gmu.baidu.com/src/extend/touch.js"></script>
+	<!--新版zepto合并版中不包括touch.js-->
+	<script type="text/javascript" src="http://gmu.baidu.com/src/extend/highlight.js"></script>
+	<script type="text/javascript" src="http://gmu.baidu.com/src/extend/event.ortchange.js"></script>
+	<script type="text/javascript" src="http://gmu.baidu.com/src/extend/matchMedia.js"></script>
+	<script type="text/javascript" src="http://gmu.baidu.com/src/core/gmu.js"></script>
+	<script type="text/javascript" src="http://gmu.baidu.com/src/core/event.js"></script>
+	<script type="text/javascript" src="http://gmu.baidu.com/src/core/widget.js"></script>
+	<script type="text/javascript" src="/js/calendar.js"></script>
+	<script type="text/javascript" src="http://gmu.baidu.com/src/widget/calendar/$picker.js"></script>
+	<script type="text/javascript">
+		console.log("user.....",[[.user]])
+		angular.module('app', [])
+		.directive('myFocus', function ($parse) {
+			return {
+				restrict: 'A',
+				require:'ngModel',
+				link: function (scope, iElement, iAttrs, iController) {
+					iController.$focused = false;
+					iElement.bind('focus', function(e) {
+						if (iAttrs.id =='datepicker') {
+							$('#datepicker').calendar({
+				                yearChangeable: true,
+				                monthChangeable: true,
+				                commit: function(e, date, dateStr) {
+				                	scope.$apply(function() {
+										// iController.$modelValue = dateStr;
+										$parse(iAttrs.ngModel).assign(scope, dateStr);
+				                		// console.log("select dateStr :",iController.$modelValue)
+									})
+				                }
+				            });
+			                $(this).calendar('show');
+						};
+						scope.$apply(function() {
+							iController.$focused = true;
+						})
+					}).bind('blur', function(e) {
+						scope.$apply(function() {
+							iController.$focused = false;
+						})
+					})
+				}
+			};
+		})
+		.controller('SubscribeCtrl', function ($scope, $http) {
+			$scope.user = [[.user]]
+			$scope.isFirstPage = true;
+			$scope.subscribe = function() {
+				console.log("submit subscribe...")
+				if ($scope.subscribeForm.$valid) {
+					console.log('sending request to server:',$scope.user);
+					$scope.subscribeForm.submitted = true
+					$http.post('/goelia/subscribe/news/[[.weixinId]]',$scope.user)
+					.success(function(data, status, headers, config){
+						$scope.subscribeForm.submitted = false
+						$scope.isFirstPage = false;
+
+					}).error(function(data, status, headers, config){
+						$scope.subscribeForm.submitted = false
+					})
+
+				} else {
+					$scope.subscribeForm.submitted = false
+				};
+			}
+
+			$scope.describePage = function(){
+				$scope.isUser = !$scope.isUser;
+			}
+
+			$http.get('/subscribe/items')
+			.success(function(data, status, headers, config){
+				console.log("items....:",data)
+				$scope.allitems = data
+
+				angular.forEach(data, function(){
+					
+				})
+			})
+			.error(function() {
+				console.log("error...")
+			})
+		})
+	</script>
+</body>
+</html>

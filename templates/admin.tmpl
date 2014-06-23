@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>admin</title>
+	<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"></head>
+<body ng-controller="AppCtrl">
+
+	<nav class="navbar navbar-default" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Goelia</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<ul class="nav navbar-nav">
+				<li>
+					<a href="/admin/user">订阅用户</a>
+				</li>
+			</ul>
+			<!-- 			<ul class="nav navbar-nav">
+			<li class="active">
+				<a href="#">Link</a>
+			</li>
+			<li>
+				<a href="#">Link</a>
+			</li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					Dropdown <b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="#">Action</a>
+					</li>
+					<li>
+						<a href="#">Another action</a>
+					</li>
+					<li>
+						<a href="#">Something else here</a>
+					</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#">Separated link</a>
+					</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#">One more separated link</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<form class="navbar-form navbar-left" role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Search"></div>
+			<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+		<ul class="nav navbar-nav navbar-right">
+			<li>
+				<a href="#">Link</a>
+			</li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					Dropdown <b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="#">Action</a>
+					</li>
+					<li>
+						<a href="#">Another action</a>
+					</li>
+					<li>
+						<a href="#">Something else here</a>
+					</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#">Separated link</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		-->
+		<ul class="nav navbar-nav navbar-right">
+			<li>
+				<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">新建</button>
+			</li>
+		</ul>
+	</div>
+	<!-- /.navbar-collapse -->
+</nav>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>大类</th>
+			<th>小类</th>
+			<th>操作</th>
+		</tr>
+	</thead>
+	<tbody >
+		<tr ng-repeat="item in subscribeitems">
+			<td>{{item.p_title}}</td>
+			<td>{{item.title}}</td>
+			<td><button class="btn btn-default" ng-click="deleteDescribe(item)">删除</button></td>
+		</tr>
+	</tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">新建类别</h4>
+			</div>
+			<div class="modal-body">
+				<form id="subscribeForm" class="form-horizontal" role="form" ng-submit="createSubscribe()">
+					<div class="form-group">
+						<label for="title" class="col-sm-2 control-label">名称</label>
+						<div class="col-sm-10">
+							<input type="text" name="title" class="form-control" ng-model="subscribe.title" id="title" placeholder="请输入类别名称" required ></div>
+					</div>
+					<div class="form-group">
+						<label for="parent" class="col-sm-2 control-label">所属类别</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="parent" name="parentId" ng-model="subscribe.parent_id" required  ng-options="m.id as m.title group by  m.title for m in subscribeitems">
+							<option value="0">----</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="submit" class="btn btn-primary">保存</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://cdn.staticfile.org/angular.js/1.3.0-beta.7/angular.min.js"></script>
+	<script type="text/javascript">
+	
+	function create(){
+		console.log("create...")
+	}
+
+	angular.module('app', [])
+	.controller('AppCtrl', function ($scope, $http) {
+		
+	    $http.get('/subscribe/items')
+		.success(function(data, status, headers, config){
+			console.log("success:",data)
+			$scope.subscribeitems = data
+		})
+		.error(function() {
+			console.log("error...")
+		})
+	    $scope.createSubscribe = function() {
+	    	var data = $scope.subscribe
+	    	console.log("data:",data)
+	    	$http.post('/subscribe/create',data)
+			.success(function(data, status, headers, config){
+				console.log("success:",data)
+				if (status == 200) {
+					window.location.href = "/admin"
+					// $('#myModal').modal('hide')
+					// $('#subscribeForm')[0].reset()
+				};
+			})
+			.error(function() {
+				console.log("error...")
+			})
+	    }
+	    $scope.deleteDescribe = function(item) {
+	    	$http.delete('/subscribe/'+item.id)
+			.success(function(data, status, headers, config){
+				console.log("success:",data)
+				if (status == 200) {
+					window.location.href = "/admin"
+					// $('#myModal').modal('hide')
+					// $('#subscribeForm')[0].reset()
+				};
+			})
+			.error(function() {
+				console.log("error...")
+			})
+	    }
+		$scope.create = function() {
+			var data = {
+				"weixin_id":"hero",
+				"contact" : {
+					"gender":"male",
+					"mobile":"123456"
+				},
+				"chanels":[
+					{"name":"潮流哦"},
+					{"name":"color"}
+				]
+			}
+			$http.post('/create',data)
+			.success(function(data, status, headers, config){
+				console.log("success:",data)
+			})
+			.error(function() {
+				console.log("error...")
+			})
+		}
+	})
+	</script>
+</body>
+</html>

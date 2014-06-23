@@ -1,0 +1,32 @@
+html { color: #666; background-color: #fff; -ms-text-size-adjust: 100%; _text-overflow: ellipsis }
+body { min-width: 1240px; font: 12px/1.5 hiragino sans gb, microsoft yahei, simsun; }
+body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, select, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { margin: 0; padding: 0; }
+a { color: #2a2a2a; }
+a { text-decoration: none; }
+ul, ol { list-style: none }
+li { vertical-align: top }
+.index { position: relative; padding-top: 77px; _padding-top: 0; -webkit-transition: padding .2s ease; -moz-transition: padding .2s ease; transition: padding .2s ease; }
+.index .header { position: fixed; _position: relative; top: 0; left: 0; height: 77px; z-index: 100; -webkit-transition: all .2s ease; -moz-transition: all .2s ease; transition: all .2s ease; width: 100%; background: #fff; }
+.header-inner { position: relative; width: 1240px; height: 77px; margin: 0 auto; z-index: 99; }
+.header-inner .logo { width: 220px; height: 65px; padding-top: 10px; background: url(http://imgcache.gtimg.cn/tencentvideo_v1/vstyle/web/v3/style/images/logo.png) 0 -54px no-repeat; -webkit-transition: all .2s ease; -moz-transition: all .2s ease; transition: all .2s ease; }
+.logo .link-logo { display: block; width: 158px; height: 54px; background: url(http://imgcache.gtimg.cn/tencentvideo_v1/vstyle/web/v3/style/images/logo.png) 0 0 no-repeat; }
+.logo .link-inner { display: none; }
+.header-inner .search { display: block; position: absolute; top: 16px; left: 360px; width: 518px; height: 46px; zoom: 1; -webkit-transition: all .2s ease; -moz-transition: all .2s ease; transition: all .2s ease; }
+.header-inner .quick { position: absolute; z-index: 99; top: 20px; right: 0; -webkit-transition: all .2s ease; -moz-transition: all .2s ease; -o-transition: all .2s ease; transition: all .2s ease; }
+.quick .item { position: relative; float: left; }
+.quick .item .link { display: block; _width: 26px; height: 43px; padding: 0 15px; cursor: pointer; -webkit-transition: height .2s ease; -moz-transition: height .2s ease; -o-transition: height .2s ease; transition: height .2s ease; }
+.quick .item .txt { display: block; margin-top: -2px; text-align: center; color: #b0b0b0; -webkit-transition: height .2s ease; -moz-transition: height .2s ease; -o-transition: height .2s ease; transition: height .2s ease; }
+.quick .item .divide { font-style: normal; color: #ccc; position: absolute; top: 6px; right: 0; width: 1px; height: 26px; overflow: hidden; background: #f0f0f0; background: -webkit-linear-gradient(top, rgba(252, 252, 252, 1) 0, rgba(232, 232, 232, 1) 50%, rgba(252, 252, 252, 1) 100%); background: -moz-linear-gradient(top, rgba(252, 252, 252, 1) 0, rgba(232, 232, 232, 1) 50%, rgba(252, 252, 252, 1) 100%); background: -ms-linear-gradient(top, rgba(252, 252, 252, 1) 0, rgba(232, 232, 232, 1) 50%, rgba(252, 252, 252, 1) 100%); background: linear-gradient(top, rgba(252, 252, 252, 1) 0, rgba(232, 232, 232, 1) 50%, rgba(252, 252, 252, 1) 100%); }
+.ico_history_26, .ico_collect_26, .ico_message_26, .ico_upload_26 { display: inline-block; zoom: 1; width: 26px; height: 26px; background-image: url(http://imgcache.gtimg.cn/tencentvideo_v1/vstyle/web/v3/style/images/common/sprite_common.32.png?v=0508); _background-image: url(images/common/sprite_common.ie6.png?v=0508); background-repeat: no-repeat; }
+.header-bottom { position: absolute; top: auto; bottom: -3px; left: 0; width: 100%; height: 3px; line-height: 0; font-size: 0; overflow: hidden; text-align: center; z-index: 1; background-color: #0fa6ea; background: -webkit-linear-gradient(left, rgba(15, 166, 234, 1) 0, rgba(89, 204, 24, 1) 10%, rgba(15, 166, 234, 1) 60%, rgba(15, 166, 234, 1) 100%); background: -moz-linear-gradient(left, rgba(15, 166, 234, 1) 0, rgba(89, 204, 24, 1) 10%, rgba(15, 166, 234, 1) 60%, rgba(15, 166, 234, 1) 100%); background: -ms-linear-gradient(left, rgba(15, 166, 234, 1) 0, rgba(89, 204, 24, 1) 10%, rgba(15, 166, 234, 1) 60%, rgba(15, 166, 234, 1) 100%); background: linear-gradient(left, rgba(15, 166, 234, 1) 0, rgba(89, 204, 24, 1) 10%, rgba(15, 166, 234, 1) 60%, rgba(15, 166, 234, 1) 100%); }
+/**/
+.index .navigation { position: fixed; _position: absolute; top: 77px; left: 0; z-index: 98; width: 100%; height: 45px; padding-top: 3px; box-shadow: 0 2px 6px rgba(0, 0, 0, .4); overflow: hidden; background-color: rgba(256, 256, 256, .72); -webkit-transition: all .2s ease; -moz-transition: all .2s ease; transition: all .2s ease; -webkit-transform: translateZ(0); }
+.navigation .navigation-main { position: relative; z-index: 2; width: 100%; height: 44px; background-color: rgba(256, 256, 256, .8); }
+.navigation .navigation-inner { position: relative; z-index: 2; width: 1240px; margin: 0 auto; }
+.navigation-inner .navigation-list { float: left; height: 16px; border-left: 1px solid #fff; border-right: 1px solid #c7c6c0; margin: 14px 0; padding: 0 5px; }
+.navigation-inner .first { border-left: none; padding-left: 0; margin-left: -8px; }
+.navigation-list li { float: left; height: 45px; line-height: 45px; margin-top: -14px; _margin-bottom: -14px; zoom: 1; }
+.navigation-list li .link-nav { display: block; position: relative; float: left; height: 45px; padding: 0 8px; font-size: 14px; color: #1e1e1e; text-shadow: 0 0 0 #fff; background: transparent; -webkit-transition: all .4s ease; -moz-transition: all .4s ease; transition: all .4s ease; }
+.focus { position: relative; z-index: 1; width: 100%; height: 504px; background-color: #efefef; }
+.focus .focus-inner { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.focus .focus-img { display: block; position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 100%; background-position: top center; background-repeat: no-repeat; }
