@@ -8,15 +8,18 @@
 	<link rel="stylesheet" type="text/css" href="http://gmu.baidu.com/assets/widget/calendar/calendar.css" />
 	<link rel="stylesheet" type="text/css" href="http://gmu.baidu.com/assets/widget/calendar/calendar.default.css" />
 	<style type="text/css">
-
-	body,.ui.menu {
+	body {
+		padding: 0 20px;
+	}
+	.ui.menu {
 		margin: 0;
 	}
+
 	</style>
 </head>
 <body ng-controller="SubscribeCtrl">
-	<nav class="ui menu">
-		<span class=" text item" ng-show="isUser">
+	<nav class="ui">
+		<span class="right floated text item" ng-show="isUser">
 			<div class="ui button green" ng-click="describePage()">个人信息</div>
 		</span>
 		[[if .user]]
@@ -28,6 +31,15 @@
 	<form class="ui form segment" name="subscribeForm" novalidate ng-submit="subscribe()" ng-show="!isUser">
 		<div class="ui active inverted dimmer" ng-show="subscribeForm.submitted">
 			<div class="ui text loader">正在提交...</div>
+		</div>
+		<div class="ui center aligned list ">
+			<div class="item " style="width:400px;">
+				<img class="ui avatar image" src="/images/demo/avatar.jpg">
+				<div class="content">
+					<div class="header">INFORMATION</div>
+					资料填写
+				</div>
+			</div>
 		</div>
 		<div class="field" ng-class="{error:subscribeForm.first_name.$invalid && subscribeForm.first_name.$dirty}">
 			<div class="ui left labeled icon input">
@@ -66,6 +78,15 @@
 		</div>
 	</form>
 	<form class="ui form segment" name="subscribeForm2" ng-show="isUser">
+		<div class="ui grid">
+			<div class="column">
+				<h2 class="ui center aligned icon header"></h2>
+				<div class="ui horizontal divider">
+					<i class="circular heart icon"></i>
+				</div>
+				<div>hhhh</div>
+			</div>
+		</div>
 		<div ng-option="m.id as m.title group by  m.title for m in in allitems">
 			<div>{{m.title}}</div>
 		</div>
@@ -118,6 +139,7 @@
 			};
 		})
 		.controller('SubscribeCtrl', function ($scope, $http) {
+			$scope.gender = male
 			$scope.user = [[.user]]
 			$scope.isFirstPage = true;
 			$scope.subscribe = function() {
@@ -147,9 +169,9 @@
 			.success(function(data, status, headers, config){
 				console.log("items....:",data)
 				$scope.allitems = data
-
+				var parents=[]
 				angular.forEach(data, function(){
-					
+					if (data.parent_id==1) {};
 				})
 			})
 			.error(function() {
